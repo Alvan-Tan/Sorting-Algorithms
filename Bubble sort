@@ -1,0 +1,19 @@
+# Bubble sort, swapping adjacent integers till the list is in ascending order
+
+def bubble_sort(num_list):
+    # get length of array
+    array_len = len(num_list)
+
+    # the length of array is the MAXIMUM number of times the list needs to be run through to fully sort it
+    # e.g. [2,1] will become [1,2] after one iteration, and the second iteration confirms list is sorted
+    #e.g. [3,2,1] will become [2,1,3] after one iteration, [1,2,3] after two iteration and the third iteration confirms list is sorted
+    for i in range(array_len):
+
+        # The biggest integer of the array will always be sorted after each iteration, hence the last integer is excluded after each iteration
+        # e.g [4, 8 , 7, 3] or [8, 4, 7, 3] or [7, 4, 8 ,3] no matter which list is used, 8 being the biggest integer will "win" the condition and
+        # hence be moved to the very right. After it is excluded in the next iteration, 7 will follow suit and become the second last integer.
+        for k in range(0, array_len-i-1):
+            # comparing all elements from start of array, excluding the "last element" (dependent on the number of iteration , "i").
+            if num_list[k] > num_list[k + 1]:
+                #swapping positions of elements if current element is greater than next element
+                num_list[k], num_list[k + 1] = num_list[k + 1], num_list[k]
