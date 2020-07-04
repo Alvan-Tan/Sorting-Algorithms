@@ -1,0 +1,20 @@
+# Selection sort, works similar to insertion sort in the sense of having sorted and unsorted array.
+# The difference is the minimum/maxmimum element is focused for each iteration
+
+def selection_sort (num_list):
+    # get length of array
+    array_len = len(num_list)
+
+    # Need to go through all elements once to sort
+    for i in range(array_len):
+
+        #the first element of the unsorted list will be the temporary minimum element
+        min_index = i
+
+        # Checking through the unsorted list to find minimum_element
+        for k in range(i+1, array_len):
+            if num_list[k] < num_list[min_index]:
+                min_index = k
+
+        # after confirming the minimum element, swap the current element with minimum element
+        num_list[i], num_list[min_index] = num_list[min_index], num_list[i]
