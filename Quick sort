@@ -1,0 +1,30 @@
+# Quick sort, repeatedly using the last element of the array as the pivot to sort elements bigger (placed on the right)
+# and elements smaller (placed on the left) than it.
+def quick_sort(arr, low, high):
+    # To break the recursive call when the len of the sub array is 1 as low = high or the sub array does not exist hence high<low
+    if low < high:
+
+        # As partition returns the index of the pivot used previously, the array can be further divided into 2 sub arrays
+        pi = partition(arr, low, high)
+
+        # quick sort the left sub array
+        quick_sort(arr, low, pi-1)
+        # quick sort the right sub array
+        quick_sort(arr, pi+1, high)
+def partition(arr, low, high):
+    # The marker that shows the end of the elements that are smaller or equals to the pivot
+    end = low-1
+
+    # This variation of quick sort takes the last element as the pivot everytime
+    pivot = arr[high]
+
+    # Iterate through all elements except the pivot to sort them base on < pivot or > pivot
+    for i in range(low, high):
+        if arr[i] <= pivot:
+            end += 1
+            # e.g [1,10,2,3] 3 is the pivot. end would be 1 when i = 2. as arr[i] is less than pivot, the value 2 and 10
+            # would swap places
+            arr[end], arr[i] = arr[i], arr[end]
+    # swapping the pivot to its position which is end + 1 as all elements up to end are smaller than the pivot vice versa
+    arr[end+1], arr[high] = arr[high], arr[end + 1]
+    return end+1
