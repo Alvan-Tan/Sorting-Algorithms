@@ -1,0 +1,40 @@
+# Merge sort, breaking the array down into 2 arrays repeatedly till each array is of length = 1
+# Then merging these arrays back together by comparing values
+
+def merge_sort(num_list):
+    # if list contains only 1 element or is empty, it is already sorted
+    if len(num_list) > 1:
+        # Finding the mid point of the array to split the current array into left and right arrays
+        mid = len(num_list)//2
+        left_array = num_list[:mid]
+        right_array = num_list[mid:]
+
+        #sort the left and right array. This is called immediately as we want to break the arrays down till they each contain 1 element
+        merge_sort(left_array)
+        merge_sort(right_array)
+
+        # i is used to track the element of concern for left array, analogous for the right array using j
+        # k is used to track the element of concern for the main array
+        i=j=k = 0
+
+        # while both i and j are smaller than the length of their respective array, it means that neither of the arrays
+        # had finished checking all of its elements
+        while i < len(left_array) and j < len(right_array):
+            if left_array[i] < right_array[j]:
+                num_list[k] = left_array[i]
+                i += 1
+            else:
+                num_list[k] = right_array[j]
+                j += 1
+            k+=1
+
+        # Once the first while loop is exited, it means either the left or right array had all its elements checked
+        # we then fill in the rest of the elements from the non-completed array into the main array
+        while i < len(left_array): #if condition is true, left_array is the non-completed array, vice versa
+            num_list[k] = left_array[i]
+            i += 1
+            k += 1
+        while j < len(right_array):  # if condition is true, left_array is the non-completed array, vice versa
+            num_list[k] = right_array[j]
+            j += 1
+            k += 1
