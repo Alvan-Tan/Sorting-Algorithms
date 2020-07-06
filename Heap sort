@@ -1,0 +1,48 @@
+# Heap sort, the main function is heap_sort which would return an ordered list by swapping the biggest value of each
+# iteration to the last index of the array.
+# THe heapify function arranges the list such that the biggest element is at the root of the heap which is also arr[0]
+
+def heapify(arr, len, root):
+    #Always start by assuming the root of the heap as the largest
+    largest = root
+
+    #Formula to locate the indexes of the left and right nodes of a root in an array. The index counting starts from 0
+    left_node = 2 * root + 1
+    right_node = 2 * root + 2
+
+    #If left node exist, the index would be lower than the length of the entire array
+    #If value of left node is larger than root, assign new largest index
+    if left_node < len and arr[root] < arr[left_node]:
+        largest = left_node
+
+    # If right node exist, the index would be lower than the length of the entire array
+    # If value of right node is larger than root, assign new largest index
+    if right_node <  len and arr[largest] < arr[right_node]:
+        largest = right_node
+
+    # After comparison on both the left and right node, we can now swap the current root with the largest
+    if largest != root:
+        arr[root], arr[largest] = arr[largest], arr[root]
+
+        # After swapping the values, we need to heapify again as the swapped value might have left or right nodes with bigger values than it
+        # e.g. draw out [11, 25, 30, 18, 19, 25, 12] into heaps. The lower portion is max heap sorted, hence we only have to heapify
+        # The top most portion. After heapifying, [30,25,11,18,19,25,12] would be formed. As 25 (left node) is bigger than 12 (right node) and 11 (root)
+        # It should be the new root. without the additional heapify call sorting would be inaccurate.
+        heapify(arr, len, largest)
+
+def heap_sort(num_list):
+    #Find of the array length first
+    arr_len = len(num_list)
+
+    # Build a maxheap, where the root of a heap will always be bigger than its left or right node.
+    # arr_len//2-1 finds the last node which would have children nodes, the first -1 ensures the all nodes would be checked
+    # The second -1 initiates a backwards check from the last node that have children nodes
+    for i in range(arr_len // 2 - 1, -1, -1):
+        heapify(num_list, arr_len, i)
+
+    # Once the max heap is formed, we can start removing the biggest element from the heap and heapifying it once again
+    # to get the second biggest value for extraction
+
+    for i in range(arr_len - 1, 0, -1):
+        num_list[i], num_list[0] = num_list[0], num_list[i]
+        heapify(num_list, i, 0)
